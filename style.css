@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    transition: margin-left 0.3s; /* 内容滑动效果 */
+}
+
+h1 {
+    color: #007bff;
+}
+
+#sidebar {
+
+    position: fixed;
+    top: 0;
+    left: -200px; /* 初始位置在左侧外部 */
+    width: 200px;
+    height: 100%;
+    background-color: #333;
+    color: white;
+    transition: left 0.3s; /* 展开效果 */
+    z-index: 1000; /* 确保侧边栏在最上层 */
+}
+
+/* 侧边栏内容样式 */
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 15px;
+    border-bottom: 1px solid #444;
+}
+
+#sidebar ul li:hover {
+    background-color: #555;
+}
+
+/* 鼠标悬停区域样式 */
+#hoverArea {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px; /* 可调整宽度 */
+    height: 100%;
+    cursor: pointer; /* 鼠标指针样式 */
+    z-index: 1000; /* 确保侧边栏在最上层 */
+}
+
+#mainBox {
+    position: fixed;
+    left: 0;
+    transition: left 0.3s; /* 展开效果 */
+    width: 100%;
+    padding: 5%;
+    height: 100%;
+    background-color: #c7c7c7; /* 浅灰色背景 */
+}
+
+#leftBox{
+    flex: 1;
+    position: absolute;
+    width:50%;
+    left:0;
+    padding-left: 5%;
+}
+#rightBox{
+    flex: 1;
+    position: absolute;
+    width:50%;
+    right: 0;
+    padding-left: 5%;
+}
+
+.fixed-textarea {
+    width: 20%;      /* 固定宽度 */
+    height: 1%;     /* 固定高度 */
+    resize: none;      /* 禁用拉伸调整大小 */
+    padding: 10px;     /* 内边距 */
+    border: 1px solid #ccc;  /* 边框样式 */
+    border-radius: 4px;      /* 圆角边框 */
+    font-family: Arial, sans-serif;  /* 字体 */
+    font-size: 14px;   /* 字体大小 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+}
+
+.right-button {
+    position: fixed;        /* 固定定位 */
+    padding: 10px 20px;   /* 内边距 */
+    background-color: #007BFF; /* 按钮背景色 */
+    color: white;          /* 字体颜色 */
+    border: none;          /* 去掉边框 */
+    border-radius: 5px;   /* 圆角边框 */
+    font-size: 16px;      /* 字体大小 */
+    cursor: pointer;       /* 鼠标指针样式 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    transition: background-color 0.3s; /* 背景色过渡效果 */
+}
+
+.right-button:hover {
+    background-color: #0056b3; /* 悬停时更改背景色 */
+}
