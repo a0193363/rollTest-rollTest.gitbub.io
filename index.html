@@ -1,1 +1,100 @@
-<p>test</p>
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <title>安科专用骰子</title>
+    <link rel="stylesheet" href="style.css"> <!-- 引入样式表 -->
+
+
+</head>
+<body>
+    <div id="loading">Loading...</div>
+    <div id="sidebar">
+        <ul>
+            <li>选项 1</li>
+            <li>选项 2</li>
+            <li>选项 3</li>
+            <li>选项 4</li>
+        </ul>
+    </div>
+    <div id="hoverArea"></div>
+    <div id="mainBox">
+        <h1>安科随机数生成器</h1>
+        <div id="leftBox">
+        <p>为</p><textarea textarea class="fixed-textarea" id="chara_name"></textarea>
+        <p>进行一次</p><textarea textarea class="fixed-textarea" id="check_type"></textarea>
+        <p>检定</p>
+        <p>最大值</p><textarea textarea class="fixed-textarea" id="max_value"></textarea>
+        <p>目标值</p><textarea textarea class="fixed-textarea" id="target_value"></textarea>
+        <p><button class="right-button" id="roll">roll</button></p>
+        </div>
+        <div id="rightBox">
+            <p id="result">   </p>
+        </div>
+    </div>
+</body>
+
+
+<script>
+    // 当页面加载完成时，隐藏 loading 界面并显示内容
+    window.onload = function() {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+    };
+
+    const sidebar = document.getElementById('sidebar');
+        const hoverArea = document.getElementById('hoverArea');
+        const mainBox = document.getElementById('mainBox');
+        // 鼠标进入时展开侧边栏
+        hoverArea.addEventListener('mouseenter', function() {
+            sidebar.style.left = '0'; // 显示侧边栏
+            mainBox.style.left = '200px'; 
+        });
+
+        // 鼠标离开时收起侧边栏
+        sidebar.addEventListener('mouseleave', function() {
+            sidebar.style.left = '-200px'; // 隐藏侧边栏
+            mainBox.style.left = '0'; 
+        });
+    
+    document.getElementById('roll').onclick = function() {
+        const inputValue = parseInt(document.getElementById('max_value').value);
+        const targetValue = parseInt(document.getElementById('target_value').value);
+
+        if (isNaN(inputValue) || inputValue <= 1) {
+            document.getElementById('result').innerText = '最大值错误：请输入一个大于 1 的正整数';
+        } 
+        
+        else if (isNaN(targetValue) || targetValue <= 1){
+            document.getElementById('result').innerText = '目标值错误：请输入一个大于 1 的正整数';
+        } 
+        else {
+            var res_txt=" "
+            res_txt=document.getElementById('chara_name').value+"进行一次"+document.getElementById('check_type').value+"检定\n";
+            res_txt=res_txt+"检定结果为：\n"+"1d"+inputValue+"("+targetValue+"）"+"=";
+            
+            const randomNumber = Math.floor(Math.random() * (inputValue - 1)) + 1; // 生成小于 inputValue 的正整数
+            res_txt=res_txt+randomNumber+"\n";
+            if(targetValue>=randomNumber){//
+                if(randomNumber<=5){
+                    res_txt=res_txt+"大成功\n"
+                }
+                else{
+                    res_txt=res_txt+"检定成功\n"
+                }
+
+            }
+            else{
+                if(randomNumber>=95){
+                    res_txt=res_txt+"大失败\n"
+                }
+                else{
+                    res_txt=res_txt+"检定失败\n"
+                }
+            }
+            document.getElementById('result').innerText = res_txt;
+        }
+    };
+</script>
+</html>
