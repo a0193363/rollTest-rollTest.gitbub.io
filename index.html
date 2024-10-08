@@ -12,25 +12,30 @@
     <div id="loading">Loading...</div>
     <div id="sidebar">
         <ul>
-            <li>选项 1</li>
-            <li>选项 2</li>
-            <li>选项 3</li>
-            <li>选项 4</li>
+            <li id="li_select">NGA式三选一</li>
+            <li id="li_check">数值检定</li>
+            <li id="li_roll">个人安价</li>
+            <li id="li_replay">记录</li>
         </ul>
     </div>
     <div id="hoverArea"></div>
     <div id="mainBox">
         <h1>安科随机数生成器</h1>
+        <div id="page_check">
         <div id="leftBox">
-        <p>为</p><textarea textarea class="fixed-textarea" id="chara_name"></textarea>
-        <p>进行一次</p><textarea textarea class="fixed-textarea" id="check_type"></textarea>
+        <p>为</p><textarea textarea class="fixed-textarea" id="chara_name"  rows="1"></textarea>
+        <p>进行一次</p><textarea textarea class="fixed-textarea" id="check_type"  rows="1"></textarea>
         <p>检定</p>
-        <p>最大值</p><textarea textarea class="fixed-textarea" id="max_value"></textarea>
-        <p>目标值</p><textarea textarea class="fixed-textarea" id="target_value"></textarea>
-        <p><button class="right-button" id="roll">roll</button></p>
+        <p>最大值</p><textarea textarea class="fixed-textarea" id="max_value"  rows="1"></textarea>
+        <p>目标值</p><textarea textarea class="fixed-textarea" id="target_value"  rows="1"></textarea>
+        <p><button class="right-button" id="button_check" >roll</button></p>
         </div>
         <div id="rightBox">
-            <p id="result">   </p>
+            <h1>输出结果</h1>
+            <p id="warning_check"></p>
+            <p id="result_check">   </p>
+            <p><button class="right-button" id="copy_check" onclick="copyText(event)">复制结果</button></p>
+        </div>
         </div>
     </div>
 </body>
@@ -40,7 +45,7 @@
     // 当页面加载完成时，隐藏 loading 界面并显示内容
     window.onload = function() {
         document.getElementById('loading').style.display = 'none';
-        document.getElementById('content').style.display = 'block';
+        document.getElementById('mainBox').style.display = 'block';
     };
 
     const sidebar = document.getElementById('sidebar');
@@ -58,16 +63,16 @@
             mainBox.style.left = '0'; 
         });
     
-    document.getElementById('roll').onclick = function() {
+    document.getElementById('button_check').onclick = function() {
         const inputValue = parseInt(document.getElementById('max_value').value);
         const targetValue = parseInt(document.getElementById('target_value').value);
 
         if (isNaN(inputValue) || inputValue <= 1) {
-            document.getElementById('result').innerText = '最大值错误：请输入一个大于 1 的正整数';
+            document.getElementById('result_check').innerText = '最大值错误：请输入一个大于 1 的正整数';
         } 
         
         else if (isNaN(targetValue) || targetValue <= 1){
-            document.getElementById('result').innerText = '目标值错误：请输入一个大于 1 的正整数';
+            document.getElementById('result_check').innerText = '目标值错误：请输入一个大于 1 的正整数';
         } 
         else {
             var res_txt=" "
@@ -93,8 +98,35 @@
                     res_txt=res_txt+"检定失败\n"
                 }
             }
-            document.getElementById('result').innerText = res_txt;
+            document.getElementById('result_check').innerText = res_txt;
         }
     };
+    function copyText(event){
+        var resultText="";
+        const buttonId = event.target.id;
+        if(buttonId=="copy_check"){
+            resultText=document.getElementById("result_check").innerText;
+        }
+        if(resultText!=""){
+
+        const tempInput = document.createElement("input");
+        tempInput.value = resultText;
+
+        // 将临时输入元素添加到文档中
+        document.body.appendChild(tempInput);
+
+        // 选择输入的内容
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); // 对于手机
+
+        // 执行复制命令
+        document.execCommand("copy");
+
+        // 移除临时输入元素
+        document.body.removeChild(tempInput);
+        }
+        alert("resultText="+resultText);
+    }
+
 </script>
 </html>
