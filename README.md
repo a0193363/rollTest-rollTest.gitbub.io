@@ -1,4 +1,4 @@
 # rollTest-rollTest.gitbub.io
-just for test
+单机写安科自用，搞OC可不敢上论坛
 
 https://a0193363.github.io/rollTest-rollTest.gitbub.io/
