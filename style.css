@@ -83,6 +83,10 @@ h1 {
     font-family: Arial, sans-serif;  /* 字体 */
     font-size: 14px;   /* 字体大小 */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    overflow: hidden; /* 隐藏滚动条 */
+    resize: none;    /* 禁止调整大小 */
+    white-space: nowrap; /* 防止换行 */
+    
 }
 
 .right-button {
