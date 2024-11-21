@@ -21,21 +21,36 @@
     <div id="hoverArea"></div>
     <div id="mainBox">
         <h1>安科随机数生成器</h1>
-        <div id="page_check">
-        <div id="leftBox">
-        <p>为</p><textarea textarea class="fixed-textarea" id="chara_name"  rows="1"></textarea>
-        <p>进行一次</p><textarea textarea class="fixed-textarea" id="check_type"  rows="1"></textarea>
-        <p>检定</p>
-        <p>最大值</p><textarea textarea class="fixed-textarea" id="max_value"  rows="1"></textarea>
-        <p>目标值</p><textarea textarea class="fixed-textarea" id="target_value"  rows="1"></textarea>
-        <p><button class="right-button" id="button_check" >roll</button></p>
+        <div id="page_check" class="page">
+            <div id="leftBox">
+            <p>为</p><textarea textarea class="fixed-textarea" id="chara_name"  rows="1"></textarea>
+            <p>进行一次</p><textarea textarea class="fixed-textarea" id="check_type"  rows="1"></textarea>
+            <p>检定</p>
+            <p>最大值</p><textarea textarea class="fixed-textarea" id="max_value"  rows="1"></textarea>
+            <p>目标值</p><textarea textarea class="fixed-textarea" id="target_value"  rows="1"></textarea>
+            <p><button class="right-button" id="button_check" >roll</button></p>
+            </div>
+            <div id="rightBox">
+                <h1>输出结果</h1>
+                <p id="warning_check"></p>
+                <p id="result_check" class="res">   </p>
+                <p><button class="right-button" id="copy_check" onclick="copyText(event)">复制结果</button></p>
+            </div>
         </div>
-        <div id="rightBox">
-            <h1>输出结果</h1>
-            <p id="warning_check"></p>
-            <p id="result_check">   </p>
-            <p><button class="right-button" id="copy_check" onclick="copyText(event)">复制结果</button></p>
-        </div>
+        <div id="page_select" class="page">
+            <div id="leftBox">
+                <p>1~3</p><textarea textarea class="fixed-textarea" id="select_item1"  rows="1"></textarea>
+                <p>4~6</p><textarea textarea class="fixed-textarea" id="select_item2"  rows="1"></textarea>
+                <p>7~9</p><textarea textarea class="fixed-textarea" id="select_item3"  rows="1"></textarea>
+                <p>10  大成功/大失败</p>
+                <p><button class="right-button" id="button_select" >roll</button></p>
+            </div>
+            <div id="rightBox">
+                <h1>输出结果</h1>
+                <p id="warning_select"></p>
+                <p id="result_select" class="res">   </p>
+                <p><button class="right-button" id="copy_select" onclick="copyText(event)">复制结果</button></p>
+            </div>
         </div>
     </div>
 </body>
@@ -46,11 +61,59 @@
     window.onload = function() {
         document.getElementById('loading').style.display = 'none';
         document.getElementById('mainBox').style.display = 'block';
-    };
+        sidebarInit();
+        checkPageInit();
+        selectPageInit();
 
-    const sidebar = document.getElementById('sidebar');
+    };
+    
+    
+    function copyText(event){
+        var resultText="";
+        const buttonId = event.target.id;
+        if(buttonId=="copy_check"){
+            var resultDiv = document.getElementById("result_check");
+            resultText= resultDiv.innerText || resultDiv.textContent;
+        }
+        else if(buttonId=="copy_select"){
+            var resultDiv = document.getElementById("result_select");
+            resultText= resultDiv.innerText || resultDiv.textContent;
+        }
+        if(resultText!=""){
+
+        const tempInput = document.createElement("textarea");
+        tempInput.value = resultText;
+
+        // 将临时输入元素添加到文档中
+        document.body.appendChild(tempInput);
+
+        // 选择输入的内容
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); // 对于手机
+
+        // 执行复制命令
+        document.execCommand("copy");
+
+        // 移除临时输入元素
+        document.body.removeChild(tempInput);
+        alert("已复制到剪切板");
+        }
+        
+    }
+
+    function sidebarInit(){
+
+
+        const sidebar = document.getElementById('sidebar');
         const hoverArea = document.getElementById('hoverArea');
         const mainBox = document.getElementById('mainBox');
+
+        const liCheck = document.getElementById('li_check');
+        const liSelect = document.getElementById('li_select');
+        const pageCheck = document.getElementById('page_check');
+        const pageSelect = document.getElementById('page_select');
+        const pages = mainBox.getElementsByClassName('page');
+
         // 鼠标进入时展开侧边栏
         hoverArea.addEventListener('mouseenter', function() {
             sidebar.style.left = '0'; // 显示侧边栏
@@ -62,8 +125,36 @@
             sidebar.style.left = '-200px'; // 隐藏侧边栏
             mainBox.style.left = '0'; 
         });
-    
-    document.getElementById('button_check').onclick = function() {
+
+
+        liCheck.addEventListener('click', function() {
+            // 隐藏所有页面
+            for (let page of pages) {
+                page.style.display = 'none';
+            }
+
+            // 显示需要的页面
+            pageCheck.style.display = 'block';
+        });
+
+        
+        liSelect.addEventListener('click', function() {
+            // 隐藏所有页面
+            for (let page of pages) {
+                page.style.display = 'none';
+            }
+
+            // 显示需要的页面
+            pageSelect.style.display = 'block';
+        });
+
+        for (let page of pages) {
+                page.style.display = 'none';
+            }
+        pageSelect.style.display = 'block';
+    }
+    function checkPageInit(){
+        document.getElementById('button_check').onclick = function() {
         const inputValue = parseInt(document.getElementById('max_value').value);
         const targetValue = parseInt(document.getElementById('target_value').value);
 
@@ -101,31 +192,43 @@
             document.getElementById('result_check').innerText = res_txt;
         }
     };
-    function copyText(event){
-        var resultText="";
-        const buttonId = event.target.id;
-        if(buttonId=="copy_check"){
-            resultText=document.getElementById("result_check").innerText;
+
+    }
+    function selectPageInit(){
+        document.getElementById('button_select').onclick = function() {
+
+        var res_txt="1~3: ";
+        res_txt=res_txt+document.getElementById('select_item1').value+"\n4~6: ";
+        res_txt=res_txt+document.getElementById('select_item2').value+"\n6~9: ";
+        res_txt=res_txt+document.getElementById('select_item3').value+"\n10: 大成功/大失败\n";
+        
+        
+        const randomNumber = Math.floor(Math.random() *10) + 1; // 生成小于等于10的正整数
+        res_txt=res_txt+"\nRoll: 1d(10)="+randomNumber+"\n";
+        if(randomNumber<4){
+            res_txt=res_txt+document.getElementById('select_item1').value
         }
-        if(resultText!=""){
-
-        const tempInput = document.createElement("input");
-        tempInput.value = resultText;
-
-        // 将临时输入元素添加到文档中
-        document.body.appendChild(tempInput);
-
-        // 选择输入的内容
-        tempInput.select();
-        tempInput.setSelectionRange(0, 99999); // 对于手机
-
-        // 执行复制命令
-        document.execCommand("copy");
-
-        // 移除临时输入元素
-        document.body.removeChild(tempInput);
-        alert("已复制到剪切板");
+        else if(randomNumber<7){
+            res_txt=res_txt+document.getElementById('select_item2').value
         }
+        else if(randomNumber<10){
+            res_txt=res_txt+document.getElementById('select_item3').value
+        }
+        else if(randomNumber==10){
+            randomNumber = Math.floor(Math.random() *2) + 1 // 生成小于等于2的正整数
+            res_txt=res_txt+"\nRoll: 1d(2)="+randomNumber+"\n";
+            if(randomNumber==1){
+                res_txt=res_txt+"大成功";
+            }
+            else{
+                res_txt=res_txt+"大失败";
+            }
+        }
+
+        document.getElementById('result_select').innerText = res_txt;
+        
+    }
+
     }
 
 </script>
