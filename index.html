@@ -52,6 +52,18 @@
                 <p><button class="right-button" id="copy_select" onclick="copyText(event)">复制结果</button></p>
             </div>
         </div>
+        <div id="page_roll" class="page">
+            <div id="leftBox">
+                <p>安价项数</p><textarea textarea class="fixed-textarea" id="roll_count"  rows="1"></textarea>
+                <p><button class="right-button" id="button_roll" >roll</button></p>
+            </div>
+            <div id="rightBox">
+                <h1>输出结果</h1>
+                <p id="warning_roll"></p>
+                <p id="result_roll" class="res">   </p>
+                <p><button class="right-button" id="copy_roll" onclick="copyText(event)">复制结果</button></p>
+            </div>
+        </div>
     </div>
 </body>
 
@@ -64,7 +76,7 @@
         sidebarInit();
         checkPageInit();
         selectPageInit();
-
+        rollPageInit();
     };
     
     
@@ -77,6 +89,10 @@
         }
         else if(buttonId=="copy_select"){
             var resultDiv = document.getElementById("result_select");
+            resultText= resultDiv.innerText || resultDiv.textContent;
+        }
+        else if(buttonId=="copy_roll"){
+            var resultDiv = document.getElementById("result_roll");
             resultText= resultDiv.innerText || resultDiv.textContent;
         }
         if(resultText!=""){
@@ -110,8 +126,10 @@
 
         const liCheck = document.getElementById('li_check');
         const liSelect = document.getElementById('li_select');
+        const liRoll = document.getElementById('li_roll');
         const pageCheck = document.getElementById('page_check');
         const pageSelect = document.getElementById('page_select');
+        const pageRoll = document.getElementById('page_roll');
         const pages = mainBox.getElementsByClassName('page');
 
         // 鼠标进入时展开侧边栏
@@ -146,6 +164,16 @@
 
             // 显示需要的页面
             pageSelect.style.display = 'block';
+        });
+
+        liRoll.addEventListener('click', function() {
+            // 隐藏所有页面
+            for (let page of pages) {
+                page.style.display = 'none';
+            }
+
+            // 显示需要的页面
+            pageRoll.style.display = 'block';
         });
 
         for (let page of pages) {
@@ -230,6 +258,23 @@
     }
 
     }
+    function rollPageInit(){
+        document.getElementById('button_roll').onclick = function() {
+        const inputValue = parseInt(document.getElementById('roll_count').value);
+
+        if (isNaN(inputValue) || inputValue <= 1) {
+            document.getElementById('result_roll').innerText = '最大值错误：请输入一个大于 1 的正整数';
+        } 
+        
+        else {
+            var res_txt=" "
+            const randomNumber = Math.floor(Math.random() * (inputValue - 1)) + 1; // 生成小于 inputValue 的正整数
+            res_txt="Roll:1d("+inputValue+")="+randomNumber+"\n";
+            document.getElementById('result_roll').innerText = res_txt;
+        }
+    }
+    };
+
 
 </script>
 </html>
