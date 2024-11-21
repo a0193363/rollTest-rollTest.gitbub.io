@@ -35,6 +35,8 @@
                 <p id="warning_check"></p>
                 <p id="result_check" class="res">   </p>
                 <p><button class="right-button" id="copy_check" onclick="copyText(event)">复制结果</button></p>
+                <p>-/p><p>-</p>
+                <p><button class="right-button" id="reset_check" onclick="resetText(event)">重置</button></p>
             </div>
         </div>
         <div id="page_select" class="page">
@@ -50,6 +52,8 @@
                 <p id="warning_select"></p>
                 <p id="result_select" class="res">   </p>
                 <p><button class="right-button" id="copy_select" onclick="copyText(event)">复制结果</button></p>
+                <p>-</p><p>-</p>
+                <p><button class="right-button" id="reset_select" onclick="resetText(event)">重置</button></p>
             </div>
         </div>
         <div id="page_roll" class="page">
@@ -62,6 +66,8 @@
                 <p id="warning_roll"></p>
                 <p id="result_roll" class="res">   </p>
                 <p><button class="right-button" id="copy_roll" onclick="copyText(event)">复制结果</button></p>
+                <p>-</p><p>-</p>
+                <p><button class="right-button" id="reset_roll" onclick="resetText(event)">重置</button></p>
             </div>
         </div>
     </div>
@@ -116,7 +122,29 @@
         }
         
     }
-
+    function resetText(event){
+        const buttonId = event.target.id;
+        if(buttonId=="reset_check"){
+            var resultDiv = document.querySelectorAll('#page_check textarea');
+            // 遍历每个textarea，设置其value为0
+            resultDiv.forEach(function(textarea) {
+            textarea.value = '';});
+        }
+        else if(buttonId=="reset_select"){
+            var resultDiv = document.querySelectorAll("#page_select textarea");
+            if (resultDiv.length === 0) {
+            console.log('没有找到任何textarea元素');
+            return; // 没有找到元素，直接返回
+    }
+            resultDiv.forEach(function(textarea) {
+                textarea.value = '';});
+        }
+        else if(buttonId=="reset_roll"){
+            var resultDiv = document.querySelectorAll("#page_roll textarea");
+            resultDiv.forEach(function(textarea) {
+                textarea.value = '';});
+        }
+    }
     function sidebarInit(){
 
 
