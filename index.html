@@ -297,7 +297,7 @@
         else {
             var res_txt=" "
             const randomNumber = Math.floor(Math.random() * (inputValue )) + 1; // 生成小于 inputValue 的正整数
-            res_txt="Roll:1d("+inputValue+")="+randomNumber+"\n";
+            res_txt="Roll:1d"+inputValue+"="+randomNumber+"\n";
             document.getElementById('result_roll').innerText = res_txt;
         }
     }
