@@ -104,7 +104,7 @@
         if(resultText!=""){
 
         const tempInput = document.createElement("textarea");
-        tempInput.value = resultText;
+        tempInput.value = resultText.split(/\s+/).join('');
 
         // 将临时输入元素添加到文档中
         document.body.appendChild(tempInput);
